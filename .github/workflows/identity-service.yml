@@ -1,0 +1,41 @@
+name: Identity Service CI
+
+on:
+  pull_request:
+    paths:
+      - "services/identity-service/**"
+      - ".github/workflows/identity-service.yml"
+
+  push:
+    branches:
+      - main
+    paths:
+      - "services/identity-service/**"
+      - ".github/workflows/identity-service.yml"
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: services/identity-service
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup UV
+        uses: astral-sh/setup-uv@v6
+
+      - name: Install Dependencies
+        run: uv sync
+
+      - name: Ruff Lint
+        run: uv run ruff check .
+
+      - name: Ruff Format Check
+        run: uv run ruff format --check .
+
+      - name: MyPy
+        run: uv run mypy app
