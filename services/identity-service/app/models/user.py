@@ -1,10 +1,8 @@
-import uuid
-from sqlalchemy import String, Column, Boolean, DateTime
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import Mapped
-from sqlalchemy.sql import func
+from sqlalchemy import Boolean, String
+from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import Base, TimestampMixin, UUIDMixin
+
 
 class User(UUIDMixin, TimestampMixin, Base):
     __tablename__ = "users"
