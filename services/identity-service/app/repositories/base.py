@@ -1,15 +1,18 @@
-from typing import Generic, Type, TypeVar, Optional, Sequence
+from collections.abc import Sequence
+from typing import Generic, TypeVar
+
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
 ModelType = TypeVar("ModelType")
 
+
 class BaseRepository(Generic[ModelType]):
-    def __init__(self, model: Type[ModelType], session: AsyncSession):
+    def __init__(self, model: type[ModelType], session: AsyncSession):
         self.model = model
         self.session = session
 
-    async def get(self, id: int) -> Optional[ModelType]:
+    async def get(self, id: int) -> ModelType | None:
         result = await self.session.execute(select(self.model).filter_by(id=id))
         return result.scalar_one_or_none()
 

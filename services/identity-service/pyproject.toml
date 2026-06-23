@@ -43,7 +43,7 @@ select = [
     "B",
 ]
 
-ignore = []
+ignore = ["UP046"]
 
 [tool.ruff.format]
 quote-style = "double"
